@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         // Define directory variables
-        PROJECT_DIR = '/home/redhat/Desktop/poc_react/'
+        PROJECT_DIR = '/home/redhat/Desktop/'
         NODEJS_PATH = '/usr/local/bin/node'
     }
     stages {
