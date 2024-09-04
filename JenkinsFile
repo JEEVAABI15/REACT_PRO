@@ -1,18 +1,11 @@
 pipeline {
     agent any
-    environment {
-        // Define directory variables
-        PROJECT_DIR = '/home/redhat/Desktop/poc'
-    }
+    tools {nodejs "NodeJS"}
+
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    // Clone the repository into the project directory
-                    dir("${PROJECT_DIR}") {
-                        sh 'git clone https://github.com/JEEVAABI15/REACT_PRO.git'
-                    }
-                }
+                git url: "https://github.com/JEEVAABI15/REACT_PRO.git", branch: "main"
             }
         }
         stage('Setup Environment') {
@@ -27,12 +20,9 @@ pipeline {
         stage('Build and Serve') {
             steps {
                 script {
-                    // Run npm commands and copy built files
-                    dir("${PROJECT_DIR}/REACT_PRO") {
                         sh 'npm install'
                         sh 'npm run build'
                         sh 'cp -r dist/* /var/www/html/'
-                    }
                 }
             }
         }
