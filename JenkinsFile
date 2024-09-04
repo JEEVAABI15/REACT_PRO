@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         // Define directory variables
-        PROJECT_DIR = '/home/redhat/Desktop/'
+        PROJECT_DIR = '/home/redhat/Desktop/poc'
         NODEJS_PATH = '/usr/local/bin/node'
     }
     stages {
@@ -11,7 +11,7 @@ pipeline {
                 script {
                     // Navigate to the project directory
                     dir("${PROJECT_DIR}") {
-                        git url: 'https://github.com/JEEVAABI15/REACT_PRO.git', branch: 'main'
+                        git clone https://github.com/JEEVAABI15/REACT_PRO.git'
                     }
                 }
             }
@@ -29,10 +29,10 @@ pipeline {
             steps {
                 script {
                     // Run npm commands
-                    dir("${PROJECT_DIR}") {
+                    dir("${PROJECT_DIR/poc_react}") {
                         sh 'npm install'
                         sh 'npm run build'
-			sh 'cp  -r /home/redhat/Desktop/poc_react/dist/* /var/www/html/'
+			sh 'cp  -r /home/redhat/Desktop/poc/poc_react/dist/* /var/www/html/'
                     }
                 }
             }
