@@ -3,20 +3,19 @@ pipeline {
     environment {
         // Define directory variables
         PROJECT_DIR = '/home/redhat/Desktop/poc'
-        NODEJS_PATH = '/usr/local/bin/node'
     }
     stages {
         stage('Checkout') {
             steps {
                 script {
-                    // Navigate to the project directory
+                    // Clone the repository into the project directory
                     dir("${PROJECT_DIR}") {
-                        git clone https://github.com/JEEVAABI15/REACT_PRO.git'
+                        sh 'git clone https://github.com/JEEVAABI15/REACT_PRO.git'
                     }
                 }
             }
         }
-	stage('Setup Environment') {
+        stage('Setup Environment') {
             steps {
                 script {
                     // Verify Node.js and npm installation
@@ -28,11 +27,11 @@ pipeline {
         stage('Build and Serve') {
             steps {
                 script {
-                    // Run npm commands
-                    dir("${PROJECT_DIR/poc_react}") {
+                    // Run npm commands and copy built files
+                    dir("${PROJECT_DIR}/REACT_PRO") {
                         sh 'npm install'
                         sh 'npm run build'
-			sh 'cp  -r /home/redhat/Desktop/poc/poc_react/dist/* /var/www/html/'
+                        sh 'cp -r dist/* /var/www/html/'
                     }
                 }
             }
