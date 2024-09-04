@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+    environment {
+        // Define directory variables
+        PROJECT_DIR = '/home/redhat/Desktop/poc_react/'
+        NODEJS_PATH = '/usr/local/bin/node'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Navigate to the project directory
+                    dir("${PROJECT_DIR}") {
+                        git url: 'https://github.com/JEEVAABI15/REACT_PRO.git', branch: 'main'
+                    }
+                }
+            }
+        }
+	stage('Setup Environment') {
+            steps {
+                script {
+                    // Verify Node.js and npm installation
+                    sh 'node -v'
+                    sh 'npm -v'
+                }
+            }
+        }
+        stage('Build and Serve') {
+            steps {
+                script {
+                    // Run npm commands
+                    dir("${PROJECT_DIR}") {
+                        sh 'npm install'
+                        sh 'npm run build'
+			sh 'cp  -r /home/redhat/Desktop/poc_react/dist/* /var/www/html/'
+                    }
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
+
