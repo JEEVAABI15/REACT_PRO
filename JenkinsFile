@@ -15,8 +15,24 @@ pipeline {
                     sh 'node -v'
                     sh 'npm -v'
                 }
+        }
+	stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    script {
+                        def scannerHome = tool name: 'sonar-scanner'
+                        sh """
+                        ${scannerHome}/bin/sonar-scanner \
+			-Dsonar.projectKey=poc \
+  			-Dsonar.sources=. \
+  			-Dsonar.host.url=http://192.168.129.137:9000 \
+  			-Dsonar.login=sqp_fdbf1443db645facb60e8ec934f5558615a034ea
+                        """
+                    }
+                }
             }
         }
+
         stage('Build and Serve') {
             steps {
                 script {
